@@ -5,7 +5,7 @@
 
 詳細は第 2 章を参照のこと．
 
-[サンプル pdf](https://github.com/Ishotihadus/master-thesis-format/releases/download/v1.0/main.pdf)
+[サンプル pdf](https://github.com/Ishotihadus/master-thesis-format/blob/master/sample.pdf)
 
 ## 想定環境
 
