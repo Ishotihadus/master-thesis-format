@@ -1,0 +1,51 @@
+% !TEX engine = uplatex
+% !TEX producer = dvipdfmx
+% !TEX outputDirectory = build
+% !TEX moveResultToSourceDirectory = false
+\documentclass[10pt,a4j,fleqn,dvipdfmx,uplatex]{jsarticle}
+\usepackage{mine}
+\graphicspath{{images/}}
+
+\title{修士論文}
+\subtitle{ネオハイパーグレート線形回帰ツヴァイに\\もとづくアイドルマスターミリオンライブ!\\シアターデイズにおける最適ユニット選択の\\戦略に関する研究}
+\teacher{北沢 志保　教　授\\矢吹 可奈　准教授}
+\author{37-123456　イショティハドゥス}
+\gakka{ミリシタ学専攻}
+\date{平成31年1月31日}
+
+\begin{document}
+\maketitle
+
+\vspace*{30zh}
+\begin{center}
+本論文は東京大学大学院アイドルマスター学系研究科に修士号授与の要件として提出した修士論文である．
+\end{center}
+
+\newpage
+\pagestyle{plain}
+\pagenumbering{roman}
+\setcounter{page}{1}
+\input{chapters/00-abstract}
+
+\tableofcontents
+
+% 図目次・表目次は，数が少ないとページ数稼ぎに見えるので，必要ないなら削除したほうがいい
+\listoffigures
+\listoftables
+
+\newpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\input{chapters/01-introduction}
+\input{chapters/02-hoge}
+\input{chapters/51-conclusion}
+\input{chapters/90-acknowledgements}
+
+\bibliography{references}
+\bibliographypubs{publications}
+
+\appendix
+\input{chapters/91-appendix1}
+
+\end{document}

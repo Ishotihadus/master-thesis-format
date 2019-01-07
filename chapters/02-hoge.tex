@@ -1,0 +1,123 @@
+% !TEX root = ../main.tex
+\section{このフォーマットの使い方}
+
+\subsection{動作環境}
+
+\TeX{}Live 2018の\upLaTeX{}を使っている．
+こういうのはなるべく新しいものを使ったほうがいいぞ．
+
+\subsection{ファイル分割}
+
+さすがに大きいと面倒くさそうなのでファイルを分割している．
+上手に使いたまえ．
+
+\subsection{フォント}
+
+日本語フォントは各自設定すること．
+
+欧文フォントも日本語に合わせて適当に変えてくれ．
+\LaTeX Font Catalogue\footnote{\url{http://www.tug.dk/FontCatalogue/}}などを参考にするとよい．
+
+なおデフォルトはリュウミン＋新ゴの組み合わせで綺麗に見えるように作ってある．
+
+\subsection{便利なコマンドなど}
+
+便利なコマンドをちょこちょこ用意したので使ってほしい．
+
+\subsubsection{数式}
+
+argminやargmaxはコマンドを作ってあるのでそれを使うべし．
+\begin{verbatim}
+    \hat{x} = \argmin_{x} f(x)
+\end{verbatim}
+\begin{equation}
+    \hat{x} = \argmin_{x} f(x)
+\end{equation}
+
+括弧は\verb|\paren|，\verb|\sbra|，\verb|\cbra|コマンドを使うと\verb|\left(| / \verb|\right)|などと同じ処理になる．
+\begin{verbatim}
+    i\hbar\diffp*{\psi\paren{\bm{x},t}}{t}
+    = \sbra{\frac{-\hbar^2}{2m}\nabla^2 + V\paren{\bm{x},t}}\psi\paren{\bm{x},t}
+\end{verbatim}
+\begin{equation}
+    i\hbar\diffp*{\psi\paren{\bm{x},t}}{t} = \sbra{\frac{-\hbar^2}{2m}\nabla^2 + V\paren{\bm{x},t}}\psi\paren{\bm{x},t}
+\end{equation}
+
+\verb|\abs|とか\verb|\norm|とかもある．
+\begin{verbatim}
+    \abs{\jacob{x,y}{r,\theta}} = r
+\end{verbatim}
+\begin{equation}
+    \abs{\jacob{x,y}{r,\theta}} = r
+\end{equation}
+
+条件付き確率用に\verb|\agivenb|と\verb|\agivenbp|コマンドもある．
+pが付いている方は括弧もついでに書いてくれる．
+\begin{verbatim}
+    p\agivenbp{\bm{x}}{\bm{\alpha}}
+    = \frac{\Gamma\paren{\prod^P\alpha_p}}{\prod_p^P\Gamma\paren{\alpha_p}}
+      \prod_p^Px_p^{\alpha_p-1}
+\end{verbatim}
+\begin{equation}
+    p\agivenbp{\bm{x}}{\bm{\alpha}} = \frac{\Gamma\paren{\prod^P\alpha_p}}{\prod_p^P\Gamma\paren{\alpha_p}}\prod_p^Px_p^{\alpha_p-1}
+\end{equation}
+
+偏微分はdiffcoeffパッケージを使っている．
+diffcoeffでググると僕の記事が上の方に出てくるので使うとよい．
+
+\subsection{参照}
+
+\verb|\ref|をするたびに図とか表とか書いてるとキリがないので，ref用のコマンドを作ってある．
+\verb|\figref|，\verb|\tblref|，\verb|\eqref|，\verb|\secref|がある．
+
+\verb|\label{fig:hoge}|とすると\verb|\figref{hoge}|とすればいいようになっている．
+\figref{kana}はフェス限可奈の特訓前画像．かわいい．フェス限の性能比較は\tblref{fes}に示す．
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.8\linewidth]{036kan0104_0.png}
+    \caption{フェス限矢吹可奈}
+    \label{fig:kana}
+\end{figure}
+
+\begin{table}
+    \centering
+    \caption[フェス限やよいおりとかなしほの性能比較]{フェス限やよいおりとかなしほの性能比較（すべて特訓後☆4時）．センターに配置すると，特化値が+95\%されることに留意する．こう見ると伊織が弱い．}
+    \begin{tabular}{cc|cccc|crcc}
+    アイドル & タイプ & Vo & Da  & Vi & 合計 & 特技 & 間隔 & 確率 & 時間 \\ \hline\hline
+    矢吹可奈 & Princess & 6433 & 3272 & 9630 & 19335 & コンボナ & 7秒 & 40\% & 4秒 \\
+    北沢志保 & Fairy & 3262 & \textbf{9631} & 6454 & \textbf{19347} & コンボナ & 13秒 & 40\% & 7秒 \\
+    水瀬伊織 & Fairy & 6452 & 9578 & 3216 & 19246 & コンボナ & 11秒 & 40\% & 6秒 \\
+    高槻やよい & Angel & 9601 & 6446 & 3280 & 19327 & コンボナ & 10秒 & 40\% & 5秒
+    \end{tabular}
+    \label{tbl:fes}
+\end{table}
+
+2つ画像を並べるときがときどきあるので，それ用のコマンドも用意してある．
+\figref{yayoiori}にその例を示す．
+
+\twofigure{
+    \includegraphics[width=.8\linewidth]{007ior0084_1.png}
+    \subcaption{フェス限水瀬伊織}
+    \label{fig:iori}
+}{
+    \includegraphics[width=.8\linewidth]{005yay0084_1.png}
+    \subcaption{フェス限高槻やよい}
+    \label{fig:yayoi}
+}{
+    \caption[フェス限の伊織とやよいの比較]{フェス限の伊織とやよいの比較（ともに特訓後）}
+    \label{fig:yayoiori}
+}
+
+\verb|\secref|だけは特殊で，\verb|sec:|を補わないようになっている．
+また，章に対するリファレンスは自動的に第$n$章と書かれるので，これだけは普通に\verb|\ref|を使えばよろしい．
+すなわち，secrefはsubsection以下のときのみ使う．
+
+\subsubsection{そのほか}
+
+\verb|\enhance{hoge}|で文字列が\enhance{このようにゴシック体になってstrongになる}ようになっている．
+
+\subsection{参考文献について}
+
+参考文献と発表文献を分けて書けるようになっている．
+普通にciteすると参考文献に載るようになっており，発表文献のファイルはデフォルトですべて出力されるようになっている．
