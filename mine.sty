@@ -16,7 +16,7 @@
 \usepackage[ScaleRM=1.03926769]{libertinus-type1}
 \usepackage{libertinust1math}
 \usepackage[scaled=0.962216]{helvet}
-\usepackage[scaled]{beramono}
+\usepackage[scaled=0.89087695]{beramono}
 \usepackage[T1]{fontenc}
 \makeatletter
 \def\bfseries@rm{bx}
@@ -62,7 +62,6 @@
 \usepackage[dvipdfmx]{graphicx}
 \usepackage[dvipsnames,svgnames,x11names,dvipdfmx,table,xcdraw]{xcolor}
 \usepackage{tikz}
-\usepackage[breakable,skins]{tcolorbox}
 
 % 参考文献スタイル指定
 \usepackage[nobreak]{cite}
@@ -72,13 +71,34 @@
 \bibliographystylepubs{tieice}
 \nocitepubs{*}
 
-% キャプション変更およびリファレンス
+% キャプション
 \usepackage{subcaption}
 \captionsetup{labelsep=quad}
-\newcommand{\figref}[1]{図~\ref{fig:#1}}
-\newcommand{\tblref}[1]{表~\ref{tbl:#1}}
-\renewcommand{\eqref}[1]{式(\ref{eq:#1})}
-\newcommand{\secref}[1]{\ref{#1}節}
+\def\thesection{第\arabic{section}章}
+
+% 相互参照
+\usepackage[noabbrev]{cleveref}
+\let\nref\ref
+\let\ref\cref
+\crefformat{section}{#2#1#3}
+\crefformat{subsection}{#2#1{}節#3}
+\crefformat{subsubsection}{#2#1{}節#3}
+\crefname{figure}{図}{図}
+\crefname{table}{表}{表}
+\crefname{equation}{式}{式}
+\def\crefrangeconjunction{--}
+\def\crefpairconjunction{，}
+\def\crefmiddleconjunction{，}
+\def\creflastconjunction{，}
+\def\crefpairgroupconjunction{，}
+\def\crefmiddlegroupconjunction{，}
+\def\creflastgroupconjunction{，}
+
+% 互換性用
+\newcommand{\figref}[1]{\ref{fig:#1}}
+\newcommand{\tblref}[1]{\ref{tbl:#1}}
+\renewcommand{\eqref}[1]{\ref{eq:#1}}
+\let\secref\ref
 
 % サブキャプション簡略化
 \newcommand{\twofigure}[3]{%
@@ -121,7 +141,7 @@
     {\Huge\textbf{指導教員}
     \begin{minipage}[t]{10em}
         \begin{flushright}
-        　\Huge\textbf{\theteacher}
+        \Huge\textbf{\theteacher}
         \end{flushright}
     \end{minipage}}
     \vspace{60pt}\par
@@ -136,19 +156,14 @@
 % 見出し
 \usepackage[explicit]{titlesec}
 \newcommand{\sectionbreak}{\clearpage}
-
 \titleformat{\section}[display]{\normalfont\Large\bfseries}
 {\titlerule\vspace{3.6ex}\filleft\Huge{\thesection}}
 {3.6ex}{\titlerule\vspace{2ex}#1\filright}[\vspace{2ex}\titlerule]
 \titlespacing{\section}{0pt}{0ex}{4ex}
-
 \titleformat{\subsection}[hang]{\normalfont\gtfamily\sffamily\large}{{\color{Gray}\vrule width 2pt \hspace{.7em}}\thesubsection}{1em}{#1}
 \titlespacing{\subsection}{0pt}{4ex}{1.9ex}
-
 \titleformat{\subsubsection}[hang]{\normalfont\gtfamily\sffamily}{\thesubsubsection}{1em}{#1}
 \titlespacing{\subsubsection}{0pt}{3ex}{1.7ex}
-
-\renewcommand{\thesection}{第\arabic{section}章}
 
 % 脚注
 \let\oldthefootnote\thefootnote

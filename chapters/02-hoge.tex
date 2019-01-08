@@ -1,5 +1,6 @@
 % !TEX root = ../main.tex
 \section{このフォーマットの使い方}
+\label{sec:02-hoge}
 
 \subsection{動作環境}
 
@@ -12,6 +13,7 @@
 上手に使いたまえ．
 
 \subsection{フォント}
+\label{ssec:02-hoge-font}
 
 日本語フォントは各自設定すること．
 
@@ -21,6 +23,7 @@
 なおデフォルトはリュウミン＋新ゴの組み合わせで綺麗に見えるように作ってある．
 
 \subsection{便利なコマンドなど}
+\label{ssec:02-hoge-commands}
 
 便利なコマンドをちょこちょこ用意したので使ってほしい．
 
@@ -32,6 +35,7 @@ argminやargmaxはコマンドを作ってあるのでそれを使うべし．
 \end{verbatim}
 \begin{equation}
     \hat{x} = \argmin_{x} f(x)
+    \label{eq:eq1}
 \end{equation}
 
 括弧は\verb|\paren|，\verb|\sbra|，\verb|\cbra|コマンドを使うと\verb|\left(| / \verb|\right)|などと同じ処理になる．
@@ -41,6 +45,7 @@ argminやargmaxはコマンドを作ってあるのでそれを使うべし．
 \end{verbatim}
 \begin{equation}
     i\hbar\diffp*{\psi\paren{\bm{x},t}}{t} = \sbra{\frac{-\hbar^2}{2m}\nabla^2 + V\paren{\bm{x},t}}\psi\paren{\bm{x},t}
+    \label{eq:eq2}
 \end{equation}
 
 \verb|\abs|とか\verb|\norm|とかもある．
@@ -49,6 +54,7 @@ argminやargmaxはコマンドを作ってあるのでそれを使うべし．
 \end{verbatim}
 \begin{equation}
     \abs{\jacob{x,y}{r,\theta}} = r
+    \label{eq:eq3}
 \end{equation}
 
 条件付き確率用に\verb|\agivenb|と\verb|\agivenbp|コマンドもある．
@@ -60,18 +66,22 @@ pが付いている方は括弧もついでに書いてくれる．
 \end{verbatim}
 \begin{equation}
     p\agivenbp{\bm{x}}{\bm{\alpha}} = \frac{\Gamma\paren{\prod^P\alpha_p}}{\prod_p^P\Gamma\paren{\alpha_p}}\prod_p^Px_p^{\alpha_p-1}
+    \label{eq:eq4}
 \end{equation}
 
 偏微分はdiffcoeffパッケージを使っている．
 diffcoeffでググると僕の記事が上の方に出てくるので使うとよい．
 
+\subsubsection{そのほか}
+
+\verb|\enhance{hoge}|で文字列が\enhance{このようにゴシック体になってstrongになる}ようになっている．
+
 \subsection{参照}
 
-\verb|\ref|をするたびに図とか表とか書いてるとキリがないので，ref用のコマンドを作ってある．
-\verb|\figref|，\verb|\tblref|，\verb|\eqref|，\verb|\secref|がある．
+あらゆる\verb|\ref|は勝手に「図」とか「表」とか「節」とか「式」とか自動で入るようになっている．
 
-\verb|\label{fig:hoge}|とすると\verb|\figref{hoge}|とすればいいようになっている．
-\figref{kana}はフェス限可奈の特訓前画像．かわいい．フェス限の性能比較は\tblref{fes}に示す．
+\ref{fig:kana}はフェス限可奈の特訓前画像．かわいい．
+フェス限の性能比較は\ref{tbl:fes}に示す．
 
 \begin{figure}
     \centering
@@ -94,7 +104,7 @@ diffcoeffでググると僕の記事が上の方に出てくるので使うと�
 \end{table}
 
 2つ画像を並べるときがときどきあるので，それ用のコマンドも用意してある．
-\figref{yayoiori}にその例を示す．
+\ref{fig:yayoiori}にその例を示す．
 
 \twofigure{
     \includegraphics[width=.8\linewidth]{007ior0084_1.png}
@@ -109,13 +119,11 @@ diffcoeffでググると僕の記事が上の方に出てくるので使うと�
     \label{fig:yayoiori}
 }
 
-\verb|\secref|だけは特殊で，\verb|sec:|を補わないようになっている．
-また，章に対するリファレンスは自動的に第$n$章と書かれるので，これだけは普通に\verb|\ref|を使えばよろしい．
-すなわち，secrefはsubsection以下のときのみ使う．
+refはcleverefを使っているので，\verb|\ref{eq:eq1,eq:eq2,eq:eq3}|などとカンマ区切りで使える．
+使うと\ref{eq:eq1,eq:eq2,eq:eq3}のように勝手にいい感じになる．
+節とか章とかはカンマ区切りで指定するとおかしくなっちゃうのでそのまま書いたほうがよい．
 
-\subsubsection{そのほか}
-
-\verb|\enhance{hoge}|で文字列が\enhance{このようにゴシック体になってstrongになる}ようになっている．
+節とか章とかの参照は\ref{sec:02-hoge}とか\ref{ssec:02-hoge-font}とかになる．
 
 \subsection{参考文献について}
 
