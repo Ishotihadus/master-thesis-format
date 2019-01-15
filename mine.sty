@@ -1,6 +1,8 @@
 % レイアウト
-\usepackage[dvipdfm,left=19.05mm, right=19.05mm, top=25.40mm, bottom=25.40mm]{geometry}
+\usepackage[driver=dvipdfm,hmargin=19.05truemm,vmargin=25.40truemm]{geometry}
 \usepackage{setspace}
+
+% ページ数が足りないときの最終手段
 % \renewcommand{\baselinestretch}{1.08}
 
 % float関連処理（なるべく上側へ）
@@ -13,10 +15,10 @@
 \renewcommand{\floatpagefraction}{1}
 
 % フォント
-\usepackage[ScaleRM=1.03926769]{libertinus-type1}
+\usepackage[ScaleRM=1.04]{libertinus-type1}
 \usepackage{libertinust1math}
-\usepackage[scaled=0.962216]{helvet}
-\usepackage[scaled=0.89087695]{beramono}
+\usepackage[scaled=0.93]{helvet}
+\usepackage[scaled=0.91]{beramono}
 \usepackage[T1]{fontenc}
 \makeatletter
 \def\bfseries@rm{bx}
@@ -25,7 +27,8 @@
 % 日本語フォント
 \usepackage[expert,deluxe,jis2004,uplatex]{otf}
 
-% 変えたいならこれらのコマンドを使うべし
+% フォントを変えたいなら pxchfon パッケージを使うとよい
+% 参考: https://qiita.com/zr_tex8r/items/15ec2848371ec19d45ed
 % \usepackage[noalphabet]{pxchfon}
 % \setlightminchofont{AP-OTF-BunkyuMinPr6N-R.otf}
 % \setmediumminchofont{A-OTF-RyuminPr6N-Regular.otf}
@@ -63,12 +66,16 @@
 \usepackage[dvipsnames,svgnames,x11names,dvipdfmx,table,xcdraw]{xcolor}
 \usepackage{tikz}
 
+% 表処理
+\usepackage{booktabs}
+\usepackage{multirow}
+
 % 参考文献スタイル指定
 \usepackage[nobreak]{cite}
 \usepackage[resetlabels]{multibib}
 \newcites{pubs}{発表文献}
-\bibliographystyle{tieice}
-\bibliographystylepubs{tieice}
+\bibliographystyle{jplain}
+\bibliographystylepubs{junsrt}
 \nocitepubs{*}
 
 % キャプション
@@ -86,6 +93,8 @@
 \crefname{figure}{図}{図}
 \crefname{table}{表}{表}
 \crefname{equation}{式}{式}
+\crefname{section}{}{}
+\crefname{appendix}{}{}
 \def\crefrangeconjunction{--}
 \def\crefpairconjunction{，}
 \def\crefmiddleconjunction{，}
@@ -129,33 +138,32 @@
 \makeatother
 
 \renewcommand{\maketitle}{%
-\hspace{0pt}
-\pagestyle{empty}\vfill
+\pagestyle{empty}\null\vfill
 \begin{center}
-    {\fontsize{42pt}{42pt}\selectfont\textbf{\thetitle}}
-    \vspace{60pt}\par
-    \begin{spacing}{1.2}\Huge\textbf{\thesubtitle}\end{spacing}
+    \bfseries\begin{spacing}{1.1}
+    \fontsize{42pt}{42pt}\selectfont\thetitle
+    \vspace{60pt}\par\Huge
+    \thesubtitle
     \vspace{50pt}\par
-    {\Huge\textbf{\thedate\ 提出}\par}
+    \thedate\ 提出
     \vspace{70pt}\par
-    {\Huge\textbf{指導教員}
+    指導教員
     \begin{minipage}[t]{10em}
         \begin{flushright}
-        \Huge\textbf{\theteacher}
+            \Huge\textbf{\theteacher}
         \end{flushright}
-    \end{minipage}}
+    \end{minipage}
     \vspace{60pt}\par
-    {\Huge\textbf{\thegakka}}
-    \vspace{20pt}\par
-    {\Huge\textbf{\theauthor}}
+        \thegakka\\\theauthor
+    \end{spacing}
 \end{center}
-\vfill\vspace{20pt}\par
-\newpage
+\vfill
+\clearpage
 }
 
 % 見出し
 \usepackage[explicit]{titlesec}
-\newcommand{\sectionbreak}{\clearpage}
+\newcommand{\sectionbreak}{\clearpage\suppressfloats[t]}
 \titleformat{\section}[display]{\normalfont\Large\bfseries}
 {\titlerule\vspace{3.6ex}\filleft\Huge{\thesection}}
 {3.6ex}{\titlerule\vspace{2ex}#1\filright}[\vspace{2ex}\titlerule]
@@ -167,5 +175,24 @@
 
 % 脚注
 \let\oldthefootnote\thefootnote
-\def\thefootnote{{\color{Gray}\oldthefootnote}}
-\renewcommand{\footnoterule}{\noindent\tikz\draw[dotted,gray] (0,0)--(5,0);\vspace{5pt}}
+\def\thefootnote{{\color{darkgray}\oldthefootnote}}
+\let\oldthempfootnote\thempfootnote
+\def\thempfootnote{{\color{darkgray}$\dagger$\arabic{mpfootnote}}}
+\renewcommand{\footnoterule}{\noindent\tikz\draw[dotted,darkgray] (0,0)--(5,0);\vspace{5pt}}
+
+% jsclasses 用 mpfootnotemark
+\makeatletter
+\def\mpfootnotemark{%
+\@ifnextchar[\@xmpfootnotemark
+{\stepcounter{footnote}%
+\protected@xdef\@thefnmark{\thempfn}%
+\@footnotemark}}
+\def\@xmpfootnotemark[#1]{%
+\begingroup
+\c@mpfootnote #1\relax
+\unrestored@protected@xdef\@thefnmark{\thempfn}%
+\endgroup
+\@footnotemark}
+\let\mpfootnotemarks@ve=\mpfootnotemark
+\def\mpfootnotemark{\inhibitglue\mpfootnotemarks@ve}
+\makeatother
